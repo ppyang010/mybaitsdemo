@@ -1,0 +1,46 @@
+
+<!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="true"/>
+        <!-- 打印查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 -->
+        <!-- <setting name="useGeneratedKeys" value="true" /> -->
+        <!-- 使用列别名替换列名 默认:true -->
+        <!-- <setting name="useColumnLabel" value="true" /> -->
+        <!-- 开启驼峰命名转换:Table{create_time} -> Entity{createTime} -->
+        <!-- <setting name="mapUnderscoreToCamelCase" value="true" /> -->
+    </settings>
+    <typeHandlers>
+        <!--扫描包的方式-->
+        <!--<package name="com.ccy.mybatis.demo.plugins"/>-->
+        <typeHandler handler="com.ccy.mybatis.demo.plugins.MyTypeHandler"/>
+        <typeHandler handler="com.ccy.mybatis.demo.plugins.ListTypeHandler"/>
+    </typeHandlers>
+    <plugins>
+        <plugin interceptor="com.ccy.mybatis.demo.plugins.MyPlugins">
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
+    <environments default="test">
+        <environment id="test">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+                <property name="url" value="jdbc:mysql://192.168.190.200:3306/ccy?useUnicode=true"/>
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- 加载mapper文件，直接加载class -->
+        <mapper class="com.ccy.mybatis.demo.domain.UserMapper"/>
+        <mapper resource="RoleMapper.xml"/>
+
+    </mappers>
+</configuration>

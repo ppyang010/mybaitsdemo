@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "com.ccy.mybatis.demo.domain.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.ccy.mybatis.demo.domain.Role">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <!--<result column="description" jdbcType="VARCHAR" property="description" typeHandler="com.ccy.mybatis.demo.plugins.MyTypeHandler"/>-->
+        <!--读取时进行转换-->
+        <result column="description" jdbcType="VARCHAR" property="descriptionList" typeHandler="com.ccy.mybatis.demo.plugins.ListTypeHandler"/>
+        <result column="role" jdbcType="VARCHAR" property="role"/>
+        <result column="available" jdbcType="INTEGER" property="available"/>
+    </resultMap>
+    <!--<cache-->
+    <!--eviction="FIFO"-->
+    <!--flushInterval="60000"-->
+    <!--size="512"-->
+    <!--readOnly="true"/>-->
+    <select id="findById" parameterType="int" resultMap="BaseResultMap">
+        select * from sys_roles where id = #{id}
+    </select>
+    <select id="findById2" parameterType="int" resultMap="BaseResultMap">
+        select * from sys_roles where id = #{id}
+    </select>
+
+    <insert id="add" parameterType="com.ccy.mybatis.demo.domain.Role">
+        insert into sys_roles(role, description, available) VALUES (#{role},#{description,typeHandler=com.ccy.mybatis.demo.plugins.MyTypeHandler},#{available})
+    </insert>
+    <!--插入时进行转换-->
+    <insert id="add2" parameterType="com.ccy.mybatis.demo.domain.Role">
+        insert into sys_roles(role, description, available) VALUES (#{role},#{descriptionList,typeHandler=com.ccy.mybatis.demo.plugins.ListTypeHandler},#{available})
+    </insert>
+
+</mapper>

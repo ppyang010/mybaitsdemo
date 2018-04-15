@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "com.ccy.mybatis.demo.domain.UserMapper">
+    <resultMap id="BaseResultMap" type="com.ccy.mybatis.demo.domain.User">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="salt" jdbcType="VARCHAR" property="salt" typeHandler="com.ccy.mybatis.demo.plugins.MyTypeHandler"/>
+        <result column="locked" jdbcType="INTEGER" property="locked"/>
+
+    </resultMap>
+    <!--<cache-->
+    <!--eviction="FIFO"-->
+    <!--flushInterval="60000"-->
+    <!--size="512"-->
+    <!--readOnly="true"/>-->
+    <select id="findById" parameterType="int" resultType="com.ccy.mybatis.demo.domain.User">
+        select * from sys_users where id = #{id}
+    </select>
+
+
+</mapper>
