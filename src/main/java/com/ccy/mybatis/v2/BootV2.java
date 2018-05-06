@@ -9,9 +9,11 @@ import com.ccy.mybatis.v2.session.CySqlSessionV2;
 
 public class BootV2 {
     public static void main(String[] args) {
-        CySqlSessionV2 sqlSession = new CySqlSessionV2(new CyConfigurationV2(), new SimpleCyExecutorV2());
+
+        CySqlSessionV2 sqlSession = new CySqlSessionV2(new CyConfigurationV2());
         UserMapperV2 mapper = sqlSession.getMapper(UserMapperV2.class);
         User admin = mapper.getByUsername("admin");
+        admin = mapper.getByUsername("admin");
         System.out.println(admin);
     }
 }
